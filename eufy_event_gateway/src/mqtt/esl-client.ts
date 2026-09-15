@@ -173,7 +173,9 @@ export class EslMqttClient {
         if (!socket.authorized) {
           fail(
             new Error(
-              `Eufy MQTT TLS certificate was not authorized: ${socket.authorizationError ?? "unknown TLS error"}`,
+              `Eufy MQTT TLS certificate was not authorized: ${
+                socket.authorizationError ?? "unknown TLS error"
+              }`,
             ),
           );
           return;
@@ -234,10 +236,10 @@ export class EslMqttClient {
         }
 
         const sessionPresent =
-          (packet.payload[0] & 0x01) !== 0;
+          (packet.payload.readUInt8(0) & 0x01) !== 0;
 
         const returnCode =
-          packet.payload[1];
+          packet.payload.readUInt8(1);
 
         if (returnCode !== 0) {
           fail(
@@ -494,7 +496,7 @@ function readMqttPacket(
   }
 
   const firstByte =
-    buffer[0];
+    buffer.readUInt8(0);
 
   const type =
     firstByte >> 4;
@@ -513,7 +515,7 @@ function readMqttPacket(
     }
 
     const digit =
-      buffer[index];
+      buffer.readUInt8(index);
 
     index += 1;
     encodedBytes += 1;
@@ -614,16 +616,28 @@ function parseEndpoint(
     );
 
   if (hostAndPort) {
+    const host =
+      hostAndPort[1];
+
+    const portText =
+      hostAndPort[2];
+
+    if (!host || !portText) {
+      throw new Error(
+        "Invalid Eufy MQTT endpoint",
+      );
+    }
+
     const port =
       Number.parseInt(
-        hostAndPort[2],
+        portText,
         10,
       );
 
     validatePort(port);
 
     return {
-      host: hostAndPort[1],
+      host,
       port,
     };
   }
