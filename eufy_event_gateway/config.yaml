@@ -1,33 +1,27 @@
-name: Eufy Mega Security
+name: Eufy E31 MQTT Probe
 version: "0.1.26"
-slug: eufy_event_gateway
-description: Event-first Eufy camera bridge for Home Assistant
-url: https://github.com/mscodemonkey/eufy-mega-security
-startup: application
-boot: auto
+slug: eufy_e31_test
+description: Isolated E31 certificate + mutual-TLS + MQTT CONNACK transport test
+url: https://github.com/wsgrumpy/eufy-mega-security
+
+startup: once
+boot: manual_only
 init: false
+
 arch:
   - aarch64
   - amd64
-ports:
-  3218/tcp: null
-ports_description:
-  3218/tcp: Gateway API
-watchdog: http://[HOST]:[PORT:3218]/live
-ingress: true
-ingress_port: 3218
-panel_icon: mdi:cctv
-host_network: true
-hassio_api: true
-discovery:
-  - eufy_event_gateway
+
 options:
   username: ""
   password: ""
-  country: AU
+  country: US
   verification_code: ""
+  force_reprovision: false
+
 schema:
   username: str
   password: password
   country: str
   verification_code: str
+  force_reprovision: bool

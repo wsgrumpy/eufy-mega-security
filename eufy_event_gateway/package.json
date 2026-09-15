@@ -14,9 +14,10 @@
     "dev": "tsx watch src/main.ts",
     "debug:push": "tsx scripts/push-debug.ts",
     "start": "node dist/main.js",
+    "probe:e31": "node dist/probes/e31-mqtt-probe.js",
     "poc:ppcs": "tsx scripts/ppcs-probe.ts",
     "test": "node --import tsx --test 'test/**/*.test.ts'",
-    "test:shell": "sh -n run.sh",
+    "test:shell": "sh -n run.sh && sh -n run-e31-test.sh",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
