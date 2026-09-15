@@ -75,3 +75,13 @@ export interface MegaAuthResult {
   readonly state: "authenticated" | "verification-required" | "captcha-required";
   readonly captcha?: MegaCaptcha;
 }
+/** Mutual-TLS credentials provisioned by Mega for the Eufy lock MQTT channel. */
+export interface LockMqttCredentials {
+  readonly cert: string;
+  readonly key: string;
+  readonly endpoint: string;
+  readonly thingName: string;
+  readonly userId: string;
+  readonly caCert: string;
+  readonly certificateId: string;
+}
